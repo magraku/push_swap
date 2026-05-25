@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariagraciaramirezku <mariagraciaramire    +#+  +:+       +#+        */
+/*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:03:02 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/24 23:17:50 by mariagracia      ###   ########.fr       */
+/*   Updated: 2026/05/25 14:24:06 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,63 +24,51 @@ int	valid_flag(char *av)
 		return (4);
 	else if (ft_strcmp(av, "--adaptative") == 0)
 		return (5);
-	ft_putstr("error");
+	ft_putstr("Error");
 	return (0);
 }
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
-	int		j;
-	t_list	*numbers;
+	t_list *numbers;
+	int bench;
+	int flag;
+	int j;
 
 	j = 1;
-	if (valid_flag(av[1]) == 1) // when --bench flag
+	bench = 0;
+	flag = 0;
+	if (valid_flag(av[1]) > 0)
 	{
-		if (valid_flag(av[2]) > 1 && valid_flag(av[2]) < 6) // --bench and strategy as flag
+		if (valid_flag(av[1]) > 1)
 		{
-			while (av[j + 2])
-			{
-				if (!(t_verify_digit(av[j + 2])))
-					return (write(1, "error", 5), 0);
-				numbers = int_assignation(numbers, av[j + 2]);
-				j++;
-			}
-			push_swap(numbers, 1, valid_flag(av[2]));  // we pass 1 for bench, and flag# for flag
+			flag = valid_flag(av[1]);
+			j = 2;
 		}
-		else
+		else if (valid_flag(av[1]) == 1 && valid_flag(av[2]) == 0)
 		{
-			while (av[j + 1]) // only --bench flag
-			{
-				if (!(ft_verify_digit(av[j + 1])))
-					return (write(1, "error", 5), 0);
-				numbers = int_assignation(numbers, av[j + 2]);
-				j++;
-			}
-			push_swap(numbers, 1, 0);  // we pass 1 for bench, and 0 for no flag
+			bench = 1;
+			j = 2;
+		}
+		else if (valid_flag(av[1]) == 1 && valid_flag(av[2]) > 1)
+		{
+			bench = 1;
+			flag = valid_flag(av[2]);
+			j = 3;
 		}
 	}
-	else if (valid_flag(av[1]) > 1 && valid_flag(av[1]) < 6) // valid flag no bench	
+
+	while (av[j])
 	{
-		while (av[j + 1])
+		if (!(verify_digit_repetition(av[j])))
+			return (write(1, "Error\n", 6), 0);
+		numbers = int_assignation(numbers, av[j++]);
+		else if (ft_findc(av[j], ' ' ))
 		{
-			if (!(t_verify_digit(av[j + 1])))
-				return (write(1, "error", 5), 0);
-			numbers = int_assignation(numbers, av[j + 1]);
-			j++;
+			ft_split(av[j]);
+			
 		}
-		push_swap(numbers, 0, valid_flag(av[1])); // we pass 0 for no bench, and flag# for flag 
 	}
-	else if	(ft_verify_digit(av[j])) // when just valid numbers
-	{
-		while (av[j])
-		{
-			if (!(ft_verify_digit(av[j])))
-				return (write(1, "error", 5), 0);
-			numbers = int_assignation(numbers, av[j + 2]);
-			j++;
-		}
-		push_swap(numbers, 0, 0);  // we pass 0 for no bench, and 0 for no flag
-	}
-	else // when error
-		return (write(1, "error", 5), 0);
+	push_swap(numbers, bench, flag);
+	return (0);
 }

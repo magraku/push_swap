@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariagraciaramirezku <mariagraciaramire    +#+  +:+       +#+        */
+/*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:02:48 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/24 22:53:00 by mariagracia      ###   ########.fr       */
+/*   Updated: 2026/05/25 14:20:15 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	ft_verify_digit(char *str)
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	size_t i;
-	size_t len;
+	size_t	i;
+	size_t	len;
 
 	len = ft_strlen((char *)src);
 	if (size == 0)
@@ -57,4 +57,18 @@ size_t	ft_strlen(char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+int	ft_findc(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
