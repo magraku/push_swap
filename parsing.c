@@ -6,7 +6,7 @@
 /*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:03:02 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/28 00:17:30 by gerramir         ###   ########.fr       */
+/*   Updated: 2026/05/28 02:55:10 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,47 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-t_data	init()
+typedef struct s_list
+{
+	int				num;
+	struct s_list	*next;
+	struct s_list	*prev;
+}					t_list;
 
+typedef struct s_data
+{
+	t_list			*a;
+	t_list			*b;
+	t_list			*numbers; // pas besoin
+	int				count;
+	int				bench;
+	int				strat;
+	int				fd;
+	int				segment;
+}					t_data;
 
+void	init_ints(t_list *num)
+{
+	num->num = 0;
+}
+
+t_data	init(t_data *data)
+{
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (NULL);
+	data->a = malloc(sizeof(t_list));
+	if (!data->a)
+		return (NULL);
+	data->b = malloc(sizeof(t_list));
+	if (!data->b)
+		return (NULL);
+	data->numbers = malloc(sizeof(t_list));
+	if (!data->numbers)
+		return (NULL);
+	init_ints(data->a);
+	return (data);
+}
 
 int	main(int ac, char **av)
 {
@@ -119,6 +157,7 @@ int	main(int ac, char **av)
 	j = 1;
 	bench = 0;
 	flag = flag_assignation(av[1], av[2], &bench, &j);
+	if ()
 	while (av[j])
 	{
 		if (!(verify_digit_repetition(av[j])))
