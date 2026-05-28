@@ -6,7 +6,7 @@
 /*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:03:02 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/28 02:55:10 by gerramir         ###   ########.fr       */
+/*   Updated: 2026/05/28 20:11:16 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	valid_flag(char *av)
 	return (0);
 }
 
-int	flag_assignation(char *s1, char *s2, int *bench, int *index)
+int	flag_assignation(char *s1, char *s2, int bench, int *index)
 {
 	int	flag;
 
@@ -75,89 +75,13 @@ void	charto_int(char **num, t_list **numbers)
 
 int	main(int ac, char **av)
 {
-	t_list	*numbers;
-	char	**num;
-	int		bench;
-	int		flag;
-	int		j;
-
-	numbers = NULL;
-	j = 1;
-	bench = 0;
-	flag = flag_assignation(av[1], av[2], &bench, &j);
-	while (av[j])
-	{
-		if (!(verify_digit_repetition(av[j])))
-			return (write(2, "Error\n", 6), 0);
-		else if (ft_findc(av[j], ' ' ))
-		{
-			num = ft_split(av[j], ' ');
-			charto_int(num, &numbers);
-			j++;
-		}
-		else
-			numbers = int_assignation(numbers, av[j++]);
-	}
-	push_swap(numbers, bench, flag);
-	return (0);
-}
-
-typedef struct s_list
-{
-	int				num;
-	struct s_list	*next;
-	struct s_list	*prev;
-}					t_list;
-
-typedef struct s_data
-{
-	t_list			*a;
-	t_list			*b;
-	t_list			*numbers; // pas besoin
-	int				count;
-	int				bench;
-	int				strat;
-	int				fd;
-	int				segment;
-}					t_data;
-
-void	init_ints(t_list *num)
-{
-	num->num = 0;
-}
-
-t_data	init(t_data *data)
-{
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (NULL);
-	data->a = malloc(sizeof(t_list));
-	if (!data->a)
-		return (NULL);
-	data->b = malloc(sizeof(t_list));
-	if (!data->b)
-		return (NULL);
-	data->numbers = malloc(sizeof(t_list));
-	if (!data->numbers)
-		return (NULL);
-	init_ints(data->a);
-	return (data);
-}
-
-int	main(int ac, char **av)
-{
 	t_data	*data;
-	t_list	*numbers;
 	char	**num;
-	int		bench;
-	int		flag;
 	int		j;
 
-	data = init(data);
+	data = init();
 	j = 1;
-	bench = 0;
-	flag = flag_assignation(av[1], av[2], &bench, &j);
-	if ()
+	data->strat = flag_assignation(av[1], av[2], &data->bench, &j);
 	while (av[j])
 	{
 		if (!(verify_digit_repetition(av[j])))
@@ -165,15 +89,42 @@ int	main(int ac, char **av)
 		else if (ft_findc(av[j], ' ' ))
 		{
 			num = ft_split(av[j], ' ');
-			charto_int(num, &numbers);
+			charto_int(num, &data->a);
 			j++;
 		}
 		else
-			numbers = int_assignation(numbers, av[j++]);
+			data->a = int_assignation(&data->a, av[j++]);
 	}
-	push_swap(numbers, bench, flag);
+	push_swap(data);
+	ft_free(data);
 	return (0);
 }
-// aritmetica de punteros, modificando 
-//variables que viven en una funcion, desde otra funcion.
-// por que necesito inicializar mi t_list *numbers con 	NULL?
+
+// int	main(int ac, char **av)
+// {
+// 	t_list	*numbers;
+// 	char	**num;
+// 	int		bench;
+// 	int		flag;
+// 	int		j;
+
+// 	numbers = NULL;
+// 	j = 1;
+// 	bench = 0;
+// 	flag = flag_assignation(av[1], av[2], &bench, &j);
+// 	while (av[j])
+// 	{
+// 		if (!(verify_digit_repetition(av[j])))
+// 			return (write(2, "Error\n", 6), 0);
+// 		else if (ft_findc(av[j], ' ' ))
+// 		{
+// 			num = ft_split(av[j], ' ');
+// 			charto_int(num, &numbers);
+// 			j++;
+// 		}
+// 		else
+// 			numbers = int_assignation(numbers, av[j++]);
+// 	}
+// 	push_swap(numbers, bench, flag);
+// 	return (0);
+// }

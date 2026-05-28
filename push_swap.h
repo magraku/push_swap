@@ -17,18 +17,21 @@ typedef struct s_data
 {
 	t_list			*a;
 	t_list			*b;
-	t_list			*numbers;
-	int				ops;
+	int				count;
 	int				bench;
 	int				strat;
 	int				fd;
 	int				segment;
 }					t_data;
+//////////////////////////// struct initialization and free
+t_data				*init(void);
+void				ft_free(t_data *data);
 
-//me toca declarar a 0 los int y malloc los que necesitan malloc
-/////////////////////////// functions
-t_list				push_swap(t_list *numbers, int bench, int flag);
+/////////////////////////// parsing
 int					valid_flag(char *av);
+
+t_list				push_swap(t_list *numbers, int bench, int flag);
+
 int					ft_verify_digit(char *str);
 int					ft_isalpha(int c);
 int					ft_strcmp(const char *s1, const char *s2);

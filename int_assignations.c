@@ -6,7 +6,7 @@
 /*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 16:40:10 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/25 14:07:44 by gerramir         ###   ########.fr       */
+/*   Updated: 2026/05/28 20:17:42 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*ft_lstnew(int content)
 	new = malloc(sizeof(t_list));
 	if (!new)
 		return (NULL);
-	new->content = content;
+	new->num = content;
 	new->next = NULL;
 	return (new);
 }
@@ -66,7 +66,7 @@ int	verify_digit_repetition(char *str)
 		i++;
 	}
 	n = ft_atoi(str);
-	while (tmp)
+	while (tmp->next != tmp->prev)
 	{
 		if (tmp->content == i)
 			return (0);
