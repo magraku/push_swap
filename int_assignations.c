@@ -6,7 +6,7 @@
 /*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 16:40:10 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/28 20:17:42 by gerramir         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:53:08 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_list	*ft_lstnew(int content)
 		return (NULL);
 	new->num = content;
 	new->next = NULL;
+	new->prev = NULL;
 	return (new);
 }
 
@@ -46,6 +47,8 @@ int	ft_atoi(const char *nptr)
 		nb = nb * 10 + (nptr[i] - '0');
 		i++;
 	}
+	if (nb > INT_MAX || nb < INT_MIN)
+		return (NULL);
 	return (nb * sign);
 }
 
@@ -61,26 +64,26 @@ int	verify_digit_repetition(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!is_alpha(str[i]))
+		if (!is_digit(str[i]))
 			return (0);
 		i++;
 	}
 	n = ft_atoi(str);
-	while (tmp->next != tmp->prev)
+	tmp = seen;
+	while (tmp)
 	{
-		if (tmp->content == i)
+		if (tmp->num == n)
 			return (0);
-		tmp->next = tmp;
+		tmp = tmp->next;
 	}
-	ft_lstadd_back(&seen, ft_lstnew(i));
+	ft_lstadd_back(&seen, ft_lstnew(n));
 	return (1);
 }
 
-t_list	*int_assignation(t_list **numbers, char *str)
+void	*int_assignation(t_list **numbers, char *str)
 {
 	int	n;
 
 	n = ft_atoi(str);
-	ft_lstadd_back(&numbers, ft_lstnew(n));
-	return (numbers);
+	ft_lstadd_back(numbers, ft_lstnew(n));
 }

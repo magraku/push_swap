@@ -6,7 +6,7 @@
 /*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:03:02 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/28 20:11:16 by gerramir         ###   ########.fr       */
+/*   Updated: 2026/05/29 15:09:16 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	valid_flag(char *av)
 	return (0);
 }
 
-int	flag_assignation(char *s1, char *s2, int bench, int *index)
+int	flag_assignation(char *s1, char *s2, int *bench, int *index)
 {
 	int	flag;
 

@@ -6,15 +6,15 @@
 /*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:02:48 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/25 14:20:15 by gerramir         ###   ########.fr       */
+/*   Updated: 2026/05/29 14:29:54 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_isalpha(int c)
+int	ft_isdigit(int c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+	return (c >= '0' && c <= '9');
 }
 
 int	ft_verify_digit(char *str)

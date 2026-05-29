@@ -1,6 +1,7 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# include <limits.h>
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -13,11 +14,26 @@ typedef struct s_list
 	struct s_list	*prev;
 }					t_list;
 
+typedef struct s_ops
+{
+	int				sa;
+	int				sb;
+	int				ss;
+	int				pa;
+	int				pb;
+	int				ra;
+	int				rb;
+	int				rr;
+	int				rra;
+	int				rrb;
+	int				rrr;
+	int				total;
+}					t_ops;
 typedef struct s_data
 {
 	t_list			*a;
 	t_list			*b;
-	int				count;
+	t_ops			*ops;
 	int				bench;
 	int				strat;
 	int				fd;
@@ -30,10 +46,10 @@ void				ft_free(t_data *data);
 /////////////////////////// parsing
 int					valid_flag(char *av);
 
-t_list				push_swap(t_list *numbers, int bench, int flag);
+t_list				*push_swap(t_data *data);
 
 int					ft_verify_digit(char *str);
-int					ft_isalpha(int c);
+int					ft_isdigit(int c);
 int					ft_strcmp(const char *s1, const char *s2);
 char				**ft_split(char const *s, char c);
 int					ft_atoi(const char *nptr);
