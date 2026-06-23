@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/21 15:03:02 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/29 15:09:16 by gerramir         ###   ########.fr       */
+/*   Created: 2026/06/13 18:57:36 by gerramir          #+#    #+#             */
+/*   Updated: 2026/06/14 18:06:26 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ int	valid_flag(char *av)
 		return (3);
 	else if (ft_strcmp(av, "--complex") == 0)
 		return (4);
-	else if (ft_strcmp(av, "--adaptative") == 0)
+	else if (ft_strcmp(av, "--adaptive") == 0)
 		return (5);
-	write(2, "Error\n", 6);
 	return (0);
 }
 
@@ -57,74 +56,65 @@ int	flag_assignation(char *s1, char *s2, int *bench, int *index)
 	return (flag);
 }
 
-void	charto_int(char **num, t_list **numbers)
+static void	charto_int(char **num, t_list **numbers, t_list **seen,
+		t_data *data)
 {
 	int	j;
 
 	j = 0;
 	while (num[j])
 	{
-		if (!(verify_digit_repetition(num[j])))
+		if (!(verify_digit_repetition(num[j], seen, data)))
 		{
 			write(2, "Error\n", 6);
 			return ;
 		}
-		*numbers = int_assignation(*numbers, num[j++]);
+		int_assignation(numbers, num[j++], data);
+	}
+}
+
+static void	parse_args(int ac, char **av, t_data *data)
+{
+	char	**num;
+	int		j;
+
+	j = 1;
+	if (ac >= 3 && ft_strncmp(av[1], "--", 2) == 0)
+		data->strat = flag_assignation(av[1], av[2], &data->bench, &j);
+	else if (ft_strncmp(av[1], "--", 2) == 0)
+		data->strat = flag_assignation(av[1], NULL, &data->bench, &j);
+	while (av[j])
+	{
+		if (!(verify_digit_repetition(av[j], &data->seen, data)))
+		{
+			write(2, "Error\n", 6);
+			data->error = 1;
+			return ;
+		}
+		else if (ft_findc(av[j], ' '))
+		{
+			num = ft_split(av[j], ' ');
+			charto_int(num, &data->a, &data->seen, data);
+			j++;
+		}
+		else
+			int_assignation(&data->a, av[j++], data);
 	}
 }
 
 int	main(int ac, char **av)
 {
 	t_data	*data;
-	char	**num;
-	int		j;
 
+	if (ac < 2)
+		return (0);
 	data = init();
-	j = 1;
-	data->strat = flag_assignation(av[1], av[2], &data->bench, &j);
-	while (av[j])
+	parse_args(ac, av, data);
+	if (!data->error)
 	{
-		if (!(verify_digit_repetition(av[j])))
-			return (write(2, "Error\n", 6), 0);
-		else if (ft_findc(av[j], ' ' ))
-		{
-			num = ft_split(av[j], ' ');
-			charto_int(num, &data->a);
-			j++;
-		}
-		else
-			data->a = int_assignation(&data->a, av[j++]);
+		push_swap(data);
+		bench(data);
 	}
-	push_swap(data);
 	ft_free(data);
 	return (0);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	t_list	*numbers;
-// 	char	**num;
-// 	int		bench;
-// 	int		flag;
-// 	int		j;
-
-// 	numbers = NULL;
-// 	j = 1;
-// 	bench = 0;
-// 	flag = flag_assignation(av[1], av[2], &bench, &j);
-// 	while (av[j])
-// 	{
-// 		if (!(verify_digit_repetition(av[j])))
-// 			return (write(2, "Error\n", 6), 0);
-// 		else if (ft_findc(av[j], ' ' ))
-// 		{
-// 			num = ft_split(av[j], ' ');
-// 			charto_int(num, &numbers);
-// 			j++;
-// 		}
-// 		else
-// 			numbers = int_assignation(numbers, av[j++]);
-// 	}
-// 	push_swap(numbers, bench, flag);
-// 	return (0);
-// }

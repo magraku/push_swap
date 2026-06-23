@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axweinma <axweinma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 15:02:48 by axweinma          #+#    #+#             */
-/*   Updated: 2026/05/29 14:29:54 by gerramir         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:02:16 by axweinma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_verify_digit(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!(ft_isalpha(str[i])))
+		if (!(ft_isdigit(str[i])))
 			return (0);
 		i++;
 	}

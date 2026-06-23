@@ -1,29 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   movement_push.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gerramir <gerramir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/08 23:28:09 by axweinma          #+#    #+#             */
-/*   Updated: 2026/06/14 18:04:17 by gerramir         ###   ########.fr       */
+/*   Created: 2026/06/12 19:25:17 by mariagracia       #+#    #+#             */
+/*   Updated: 2026/06/13 20:13:40 by gerramir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_swap(t_data *data)
+void	pa(t_list **a, t_list **b, t_data *data)
 {
-	data->disorder = disorder(data);
-	if (data->disorder == 0)
+	t_list	*tmp;
+
+	if (!*b)
 		return ;
-	data->disorder = disorder(data);
-	if (data->strat == 2)
-		fonction_simple(data);
-	else if (data->strat == 3)
-		fonction_medium(data);
-	else if (data->strat == 4)
-		fonction_complex(data);
-	else
-		fonction_adaptive(data);
+	tmp = *b;
+	*b = (*b)->next;
+	tmp->next = *a;
+	*a = tmp;
+	if (data->bench == 0)
+		write(1, "pa\n", 3);
+	data->ops->pa++;
+	data->ops->total++;
+}
+
+void	pb(t_list **b, t_list **a, t_data *data)
+{
+	t_list	*tmp;
+
+	if (!*a)
+		return ;
+	tmp = *a;
+	*a = (*a)->next;
+	tmp->next = *b;
+	*b = tmp;
+	if (data->bench == 0)
+		write(1, "pb\n", 3);
+	data->ops->pb++;
+	data->ops->total++;
 }
